@@ -2,6 +2,7 @@
   <div class="topbar">
     <div class="topbar-left">
       <img class="avatar" src="../assets/logo.png"/>
+      <span>fileStore</span>
     </div>
     <div class="topbar-right">
       <span class="username">{{ username }}</span>
@@ -14,13 +15,13 @@
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item
-          ><span @click="loginFormVisible = true">{{
+          ><span @click="goToLogin">{{
               LoginTab
             }}</span></el-dropdown-item
           >
           <el-dropdown-item
           ><span
-          ><span @click="registerFormVisible = true">注册</span></span
+          ><span @click="goToRegister">注册</span></span
           ></el-dropdown-item
           >
           <el-dropdown-item
@@ -28,101 +29,56 @@
           >
         </el-dropdown-menu>
       </el-dropdown>
-      <LoginForm
-        :loginFormVisible="loginFormVisible"
-        @loginformevent="syncLoginFormVisible"
-        @loginSuccess="checkUserStatus"
-      ></LoginForm>
-      <RegisterForm
-        :registerFormVisible="registerFormVisible"
-        @registerformevent="syncRegisterFormVisible"
-      ></RegisterForm>
     </div>
   </div>
 </template>
 
 <script>
-  import {userApi} from "../router/api.js";
+import { userApi } from '../router/api.js'
+import { userSSOHost } from '../router/host.js'
 
-  import LoginForm from "@/components/LoginForm.vue";
-  import RegisterForm from "@/components/RegisterForm.vue";
-
-  export default {
-    created: function () {
-      this.checkUserStatus();
+export default {
+  data () {
+    return {
+    }
+  },
+  methods: {
+    goToLogin () {
+      this.logout()
     },
-    data() {
-      return {
-        loginFormVisible: false,
-        registerFormVisible: false
-      };
+    goToRegister () {
+      window.location.href = userSSOHost + '?goto=2'
     },
-    methods: {
-      handleSelect(key, keyPath) {
-        console.log(key, keyPath);
-      },
-      syncLoginFormVisible(val) {
-        this.loginFormVisible = val;
-      },
-      syncRegisterFormVisible(val) {
-        this.registerFormVisible = val;
-      },
-      checkUserStatus() {
-        // 如果验证通过了
-        this.$get(userApi.userCheckUserStatusApi).then(res => {
-          // 如果已经登录了
-          if (res.data.isLogin) {
-            //设置全局的userInfo
-            this.$store.dispatch('setLoginUser', res.data.userSession);
-          } else {
-            // 打开登录弹窗
-            this.loginFormVisible = true;
-          }
-        });
-      },
-      logout(){
-        this.$post(userApi.userLogout);
-        //否则就跳到默认的首页
-        if (this.$route.path !== "/main") {
-          this.$router.push('/main')
-          location.reload()
-        }else {
-          location.reload()
-        }
-
-      }
-    },
-
-    components: {
-      LoginForm,
-      RegisterForm
-    },
-    watch: {
-      loginFormVisible(newName, oldName) {
-        console.log("loginFormVisible from " + oldName + " to " + newName);
-      },
-      registerFormVisible(newName, oldName) {
-        console.log("registerFormVisible from " + oldName + " to " + newName);
-      }
-    },
-    computed: {
-      LoginTab: function () {
-        if (this.isLogin === true) {
-          return "切换";
-        } else {
-          return "登录";
-        }
-      },
-      username: function () {
-        return this.$store.getters.getUserInfo.username
-      },
-      avatar: function () {
-        return this.$store.getters.getUserInfo.avatar
+    logout () {
+      this.$post(userApi.userLogout)
+      // 否则就跳到默认的首页
+      if (this.$route.path !== '/main') {
+        this.$router.push('/main')
+        location.reload()
+      } else {
+        location.reload()
       }
     }
-  };
-  console.log("init loginFormVisible = false");
-  console.log("init registerFormVisible = false");
+  },
+
+  watch: {
+  },
+  computed: {
+    LoginTab: function () {
+      if (this.$store.getters.checkUserLogin === true) {
+        return '切换'
+      } else {
+        return '登录'
+      }
+    },
+    username: function () {
+      return this.$store.getters.getUserInfo.username
+    },
+    avatar: function () {
+      return this.$store.getters.getUserInfo.avatar
+    }
+  }
+}
 </script>
 
 <style scoped>

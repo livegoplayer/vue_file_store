@@ -1,50 +1,40 @@
-const userApiHost = 'http://127.0.0.1'
-const userApiPort = '9091'
-const userApiPrefix = '/api/user/'
+import { apiConfig } from './config/index'
+
+const userApiHost = apiConfig.user_api_host
+const userApiPort = apiConfig.user_api_port
+const userApiPrefix = apiConfig.user_api_prefix
 
 const userApiLink = userApiHost + ':' + userApiPort + userApiPrefix
 
-const userLoginApi = userApiLink + 'login'
-const userRegisterApi = userApiLink + 'register'
-const userAddUserApi = userApiLink + 'addUser'
-const userDelUserApi = userApiLink + 'delUser'
-const userCheckUserStatusApi = userApiLink + 'checkUserStatus'
-const userCheckUserAuthorityApi = userApiLink + 'checkUserAuthority'
-const userGetUserAuthorityListApi = userApiLink + 'getUserAuthorityList'
-const userGetAuthorityListApi = userApiLink + 'getAuthorityList'
-const userAddUserRoleApi = userApiLink + 'addUserRole'
-const userDelUserRoleApi = userApiLink + 'delUserRole'
-const userGetRoleListApi = userApiLink + 'getRoleList'
-const userGetUserRoleListApi = userApiLink + 'getUserRoleList'
-const userGetUserListApi = userApiLink + 'getUserList'
-const userLogout = userApiLink + 'logout'
+const userCheckUserStatusApi = userApiLink + 'checkToken'
+const userLogoutUserStatusApi = userApiLink + 'logout'
 
 const userApi = {
-  userLoginApi: userLoginApi,
-  userRegisterApi: userRegisterApi,
-  userAddUserApi: userAddUserApi,
-  userDelUserApi: userDelUserApi,
   userCheckUserStatusApi: userCheckUserStatusApi,
-  userCheckUserAuthorityApi: userCheckUserAuthorityApi,
-  userGetUserAuthorityListApi: userGetUserAuthorityListApi,
-  userGetAuthorityListApi: userGetAuthorityListApi,
-  userAddUserRoleApi: userAddUserRoleApi,
-  userDelUserRoleApi: userDelUserRoleApi,
-  userGetRoleListApi: userGetRoleListApi,
-  userGetUserRoleListApi: userGetUserRoleListApi,
-  userGetUserList: userGetUserListApi,
-  userLogout: userLogout,
+  userLogout: userLogoutUserStatusApi
 }
 
-const captchaApiHost = 'http://127.0.0.1'
-const captchaApiPort = '9091'
-const captchaApiPrefix = '/api/captcha/'
-
-const captchaApiLink = captchaApiHost + ':' + captchaApiPort + captchaApiPrefix
-
-const captchaGetCaptcha = captchaApiLink + 'getCaptcha'
 const commonApi = {
-  captchaGetCaptcha: captchaGetCaptcha
 }
 
-export { userApi, commonApi }
+const fileApiHost = apiConfig.file_api_host
+const fileApiPort = apiConfig.file_api_port
+const fileApiPrefix = apiConfig.file_api_prefix
+
+const fileApiLink = fileApiHost + ':' + fileApiPort + fileApiPrefix
+
+const fileApi = {
+  getFileListApi: fileApiLink + 'getFileList',
+  getPathListApi: fileApiLink + 'getPathList',
+  uploadFileApi: fileApiLink + 'upload',
+  delUserPathApi: fileApiLink + 'batchDelUserPath',
+  delUserFileApi: fileApiLink + 'batchDelUserFile',
+  batchMoveUserFileApi: fileApiLink + 'batchMoveUserFile',
+  batchMoveUserPathApi: fileApiLink + 'batchMoveUserPath',
+  saveUserPathApi: fileApiLink + 'saveUserPath',
+  getChildPathList: fileApiLink + 'getChildPathList',
+  getUploadToken: fileApiLink + 'getUploadToken',
+  ssoUploadSuccessCallback: fileApiLink + 'ssoUploadSuccessCallback'
+}
+
+export { userApi, commonApi, fileApi }

@@ -6,14 +6,11 @@
         <el-submenu index="1">
           <template slot="title">
             <i class="el-icon-menu"></i>
-            <span slot="title">个人中心</span>
+            <span slot="title">文件中心</span>
           </template>
-          <el-menu-item-group title="用户信息">
+          <el-menu-item-group title="文件操作">
             <el-menu-item index="1-1">
-              <router-link :to="'/main/user_edit'"><span>个人信息</span></router-link>
-            </el-menu-item>
-            <el-menu-item index="1-1">
-              <router-link :to="'/main/role_list'"><span>角色列表</span></router-link>
+              <router-link :to="'/main/file_list'"><span>文件列表</span></router-link>
             </el-menu-item>
           </el-menu-item-group>
         </el-submenu>
@@ -55,7 +52,9 @@
   }
 
   .content {
-    margin: auto;
+    /*margin: auto;*/
+    width: 100%;
+    margin-bottom: 0px;
   }
 
   a {
@@ -65,39 +64,47 @@
   .router-link-active {
     text-decoration: none;
   }
+
+  .page{
+    height: 100%;
+  }
+
+  .el-menu-vertical-demo:not(.el-menu--collapse){
+    min-height: 100% !important;
+  }
+  .left-menu{
+    min-height: 100% !important;
+  }
 </style>
 
 <script>
 
-  import {userApi} from "../router/api";
-
-  export default {
-    data() {
-      return {
-        isCollapse: false,
-        addUserAuthority: false,
-        delUserAuthority: false,
-        getUserListAuthority: false,
-        addUserRoleAuthority: false,
-        delUserRoleAuthority: false
-      }
+export default {
+  data () {
+    return {
+      isCollapse: false,
+      addUserAuthority: false,
+      delUserAuthority: false,
+      getUserListAuthority: false,
+      addUserRoleAuthority: false,
+      delUserRoleAuthority: false
+    }
+  },
+  methods: {
+    handleOpen (key, keyPath) {
+      console.log(key, keyPath)
     },
-    methods: {
-      handleOpen(key, keyPath) {
-        console.log(key, keyPath)
-      },
-      handleClose(key, keyPath) {
-        console.log(key, keyPath)
-      },
-      checkAuthority() {
-        this.addUserAuthority = this.$store.getters.checkAddUserAuthority
-        this.delUserAuthority = this.$store.getters.checkDelUserAuthority
-        this.getUserListAuthority = this.$store.getters.checkGetUserListAuthority
-        console.log(this.$store.state)
-        this.addUserRoleAuthority = this.$store.getters.checkAddUserRoleAuthority
-        this.delUserRoleAuthority = this.$store.getters.checkDelUserRoleAuthority
-      }
+    handleClose (key, keyPath) {
+      console.log(key, keyPath)
     },
-
+    checkAuthority () {
+      this.addUserAuthority = this.$store.getters.checkAddUserAuthority
+      this.delUserAuthority = this.$store.getters.checkDelUserAuthority
+      this.getUserListAuthority = this.$store.getters.checkGetUserListAuthority
+      this.addUserRoleAuthority = this.$store.getters.checkAddUserRoleAuthority
+      this.delUserRoleAuthority = this.$store.getters.checkDelUserRoleAuthority
+    }
   }
+
+}
 </script>

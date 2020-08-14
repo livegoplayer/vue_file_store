@@ -1,4 +1,4 @@
-# vue_user
+# vue_file_store
 
 ## Project setup
 ```

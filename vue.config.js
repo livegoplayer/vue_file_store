@@ -2,10 +2,9 @@
 // 更多请查看https://cli.vuejs.org/zh/config/#runtimecompiler
 module.exports = {
   // 基本路径,生产环境和开发环境配置
-  publicPath:
-    process.env.NODE_ENV === 'production' ? '/production-sub-path/' : '/',
+  publicPath: process.env.publicPath,
   // 输出文件目录
-  outputDir: 'dist',
+  outputDir: process.env.outputDir,
   // 放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录
   // assetsDir: '',
   // 指定生成的 index.html 的输出路径 (相对于 outputDir)。也可以是一个绝对路径。
@@ -33,14 +32,14 @@ module.exports = {
 
   devServer: {
     // 设置主机地址
-    host: '0.0.0.0',
+    host: process.env.host,
     // 设置默认端口
-    port: 8080,
+    port: process.env.port,
     // 设置代理
     proxy: {
-      '/api': {
+      '/api/user': {
         // 目标 API 地址
-        target: 'http://localhost:9091',
+        target: process.env.user_target,
         // 如果要代理 websockets
         ws: true,
         // 如果是https接口，需要配置这个参数
@@ -48,7 +47,20 @@ module.exports = {
         // 将主机标头的原点更改为目标URL
         changeOrigin: true,
         pathRewrite: {
-          '^/api': '/api'
+          '^/api/user': '/api/user'
+        },
+        '/api/file': {
+          // 目标 API 地址
+          target: process.env.target,
+          // 如果要代理 websockets
+          ws: true,
+          // 如果是https接口，需要配置这个参数
+          secure: false,
+          // 将主机标头的原点更改为目标URL
+          changeOrigin: true,
+          pathRewrite: {
+            '^/api/file': '/api/file'
+          }
         }
       }
     }
