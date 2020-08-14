@@ -8,7 +8,8 @@ var apiConfig = {
   user_api_port: '80',
   user_api_prefix: '/api/user/',
 
-  user_sso_host: 'http://www.52db.club'
+  // user_sso_host: 'http://www.52db.club'
+  user_sso_host: 'http://139.224.132.234'
 }
 
 module.exports = apiConfig
