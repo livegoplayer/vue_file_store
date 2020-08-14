@@ -34,7 +34,7 @@ const router = new VueRouter({
 // 全局前置守卫
 router.beforeEach((to, from, next) => {
   // 需要调用相关
-  checkUserStatus(mext)
+  checkUserStatus(next)
 })
 
 function checkUserStatus (next) {
