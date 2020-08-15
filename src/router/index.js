@@ -42,13 +42,11 @@ function checkUserStatus (next) {
   // 后端先获取当前页面的cookie，如果没有就从请求头中获取token参数，如果还没有就跳转到sso的登录页面
   // 前端获取token参数，如果不为空则加到新的参数post里面
   var token = getQueryVariable('token')
-  console.log(token)
   var data = {}
   if (token !== '') {
     data.token = token
     // 删除url中的token参数
     var url = funcUrlDel('token')
-    console.log(url)
     history.pushState({}, 'www.52db.xyz', url)
   }
 
@@ -59,7 +57,6 @@ function checkUserStatus (next) {
       store.dispatch('setLoginUser', res.data.userSession)
       store.dispatch('setToken', res.data.token)
     }
-    console.log(res)
     next()
   })
 }
