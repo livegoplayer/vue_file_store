@@ -39,7 +39,7 @@ axios.interceptors.response.use(
         })
       } else if (response.data.code === 2) {
         if (response.data.data.redirect_url) {
-          window.location.href = response.data.data.redirect_url + '?refer=' + window.location.href
+          window.location.href = response.data.data.redirect_url + '?refer=' + encodeURIComponent(window.location.href)
         } else {
           Message({
             showClose: true,
