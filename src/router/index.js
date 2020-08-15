@@ -47,6 +47,7 @@ function checkUserStatus (next) {
     data.token = token
     // 删除url中的token参数
     var url = funcUrlDel('token')
+    console.log('token=' + token)
     history.pushState({}, 'www.52db.xyz', url)
   }
 
