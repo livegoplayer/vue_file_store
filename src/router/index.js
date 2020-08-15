@@ -57,8 +57,7 @@ function checkUserStatus (next) {
       store.dispatch('setLoginUser', res.data.userSession)
       store.dispatch('setToken', res.data.token)
     }
-    next()
-  })
+  }).then(next())
 }
 
 export default router
