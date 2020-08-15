@@ -100,9 +100,9 @@ export function post (url, data = {}) {
           for (const it in data) {
             if (data[it] instanceof Array) {
               // 处理数组参数
-              ret += Qs.stringify({ [it]: data[it] }, { arrayFormat: 'repeat' }) + '&'
+              ret += Qs.stringify({ [it]: data[it] }, { arrayFormat: 'repeat' })
             } else {
-              ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+              ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it])
             }
           }
           return ret

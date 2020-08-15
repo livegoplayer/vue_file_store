@@ -46,9 +46,10 @@ function checkUserStatus (next) {
   var data = {}
   if (token !== '') {
     data.token = token
-    // console.log(getUrlByUrlAndQueryArray(GetUrlRelativePath(), getQueryVariables()).trim('?'))
-    // console.log(getUrlByUrlAndQueryArray(GetUrlRelativePath(), getQueryVariables()))
-    // history.replaceState({}, '', getUrlByUrlAndQueryArray(GetUrlRelativePath(), getQueryVariables()))
+    // 删除url中的token参数
+    var url = funcUrlDel('token')
+    console.log(url)
+    history.pushState({}, 'www.52db.xyz', url)
   }
 
   post(userApi.userCheckUserStatusApi, data).then(res => {
@@ -58,6 +59,7 @@ function checkUserStatus (next) {
       store.dispatch('setLoginUser', res.data.userSession)
       store.dispatch('setToken', res.data.token)
     }
+    console.log(res)
     next()
   })
 }
@@ -69,53 +71,31 @@ function getQueryVariable (variable) {
   var vars = query.split('&')
   for (var i = 0; i < vars.length; i++) {
     var pair = vars[i].split('=')
-    if (pair[0] === variable) {
+    if (pair[0] == variable) {
       return pair[1]
     }
   }
   return ''
 }
 
-function getQueryVariables () {
-  var query = window.location.search.substring(1)
-  var vars = query.split('&')
-  var queryVars = {}
-  for (var i = 0; i < vars.length; i++) {
-    var pair = vars[i].split('=')
-    if (pair[1] !== '' && pair[0] !== 'token') {
-      queryVars[pair[0]] = pair[1]
+// 删除url中某个参数,并跳转
+function funcUrlDel (name) {
+  var loca = window.location
+  var baseUrl = loca.pathname
+  var query = loca.search.substr(1)
+  if (query.indexOf(name) > -1) {
+    var obj = {}
+    var arr = query.split('&')
+    for (var i = 0; i < arr.length; i++) {
+      arr[i] = arr[i].split('=')
+      obj[arr[i][0]] = arr[i][1]
+    };
+    delete obj[name]
+    var params = JSON.stringify(obj).replace(/[\"\{\}]/g, '').replace(/\:/g, '=').replace(/\,/g, '&')
+    var url = baseUrl
+    if (params) {
+      url = baseUrl + '?' + JSON.stringify(obj).replace(/[\"\{\}]/g, '').replace(/\:/g, '=').replace(/\,/g, '&')
     }
-  }
-
-  return queryVars
-}
-
-function getUrlByUrlAndQueryArray (url, queryVars) {
-  var queryString = ''
-  for (const key in queryVars) {
-    var tmp = key + '=' + queryVars[key]
-    queryString += tmp + '&'
-  }
-  queryString = queryString.trim('&')
-  if (queryString !== '') {
-    url += '?' + queryString
-  }
-  return url
-}
-
-function GetUrlRelativePath () {
-  var url = document.location.toString()
-  var arrUrl = url.split('//')
-
-  var start = arrUrl[1].indexOf('/')
-  var relUrl = arrUrl[1].substring(start)// stop省略，截取从start开始到结尾的所有字符
-
-  if (relUrl.indexOf('?') != -1) {
-    relUrl = relUrl.split('?')[0]
-  }
-
-  if (relUrl === '/') {
-    return ''
-  }
-  return relUrl
+    return url
+  };
 }
