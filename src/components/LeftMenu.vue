@@ -10,7 +10,7 @@
           </template>
           <el-menu-item-group title="文件操作">
             <el-menu-item index="1-1">
-              <router-link :to="'/main/file_list'"><span>文件列表</span></router-link>
+              <router-link :to="'/file_list'"><span>文件列表</span></router-link>
             </el-menu-item>
           </el-menu-item-group>
         </el-submenu>
@@ -21,7 +21,7 @@
           </template>
           <el-menu-item-group title="用户">
             <el-menu-item v-if="getUserListAuthority" index="2-2">
-              <router-link :to="'/main/user_list'"><span>用户列表</span></router-link>
+              <router-link :to="'/user_list'"><span>用户列表</span></router-link>
             </el-menu-item>
           </el-menu-item-group>
         </el-submenu>
