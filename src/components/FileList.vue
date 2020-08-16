@@ -393,12 +393,14 @@ export default {
           setTimeout(() => {
             this.load.folder = false
             // let res_data = data.Data;
-            this.$post(fileApi.saveUserPathApi, {
+            var data = {
               uid: this.$store.getters.getUid,
               path_name: this.folder_form.path_name,
               parent_id: this.folder_form.parent_id ? this.folder_form.parent_id : 0,
               path_id: this.folder_form.path_id
-            }).then(res => {
+            }
+            console.log(data)
+            this.$post(fileApi.saveUserPathApi, data).then(res => {
               var newFolderData = res.data
               if (newFolderData.id) {
                 // 刷新
