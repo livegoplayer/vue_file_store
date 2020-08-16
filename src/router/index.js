@@ -8,7 +8,7 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/main',
+    path: '/',
     name: 'Main',
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
@@ -46,9 +46,8 @@ function checkUserStatus (next) {
   if (token !== '') {
     data.token = token
     // 删除url中的token参数
-    var url = funcUrlDel('token')
-    console.log('token=' + token)
-    history.pushState({}, 'www.52db.xyz', url)
+    var url = funcUrlDel('token').substr(1)
+    window.history.pushState({}, 'www.52db.xyz', url)
   }
 
   post(userApi.userCheckUserStatusApi, data).then(res => {
@@ -58,8 +57,6 @@ function checkUserStatus (next) {
       store.dispatch('setLoginUser', res.data.userSession)
       store.dispatch('setToken', res.data.token)
     }
-    console.log('file_store:')
-    console.log(res)
   }).then(next())
 }
 
