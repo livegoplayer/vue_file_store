@@ -103,6 +103,8 @@ export function post (url, data = {}) {
               ret += Qs.stringify({ [it]: data[it] }, { arrayFormat: 'repeat' }) + '&'
             } else {
               ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+              console.log('1')
+              console.log(ret)
             }
           }
           return ret.substring(0, -1)

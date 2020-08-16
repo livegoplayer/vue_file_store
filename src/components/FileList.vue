@@ -399,6 +399,7 @@ export default {
               parent_id: this.folder_form.parent_id ? this.folder_form.parent_id : 0,
               path_id: this.folder_form.path_id
             }
+            console.log('saveUserPathApi:')
             console.log(data)
             this.$post(fileApi.saveUserPathApi, data).then(res => {
               var newFolderData = res.data
@@ -481,6 +482,8 @@ export default {
     },
     // 获取所有文件夹
     getAllFolders () {
+      console.log(this.$store.getters.getUserInfo)
+      console.log(this.$store.getters.getUid)
       this.$get(fileApi.getPathListApi, { uid: this.$store.getters.getUid }).then(res => {
         this.all_folder_list = res.data.path_list || []
         const _list = [...this.all_folder_list]
