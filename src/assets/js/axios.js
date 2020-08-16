@@ -105,8 +105,7 @@ export function post (url, data = {}) {
               ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
             }
           }
-          console.log(ret.substring(0, ret.length - 1))
-          return ret.substring(0, -1)
+          return ret
         }
       ],
       headers: {

@@ -298,6 +298,7 @@ export default {
               formData.append('file', file.raw)
 
               _this.$up_load_to_oss(res.data.token.host, formParam, formData).then(res => {
+                console.log('$up_load_to_oss')
                 console.log(res)
               })
             }
