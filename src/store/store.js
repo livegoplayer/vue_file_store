@@ -14,10 +14,12 @@ const userInfo = {
 }
 
 const isLogin = false
+const userId = 0
 
 const state = {
   userInfo: userInfo,
   isLogin: isLogin,
+  user_id: userId,
   roleListUid: 0,
   addUserAuthority: false,
   delUserAuthority: false,
@@ -49,6 +51,11 @@ const getters = { // 实时监听state值的变化(最新状态)
   checkDelUserRoleAuthority () {
     return state.delUserRoleAuthority
   },
+  getUid () { // 方法名随意,主要是来承载变化的showFooter的值
+    console.log(state)
+    console.log(state.user_id)
+    return state.user_id.toString()
+  },
   getToken () {
     return state.token
   }
@@ -58,7 +65,7 @@ const mutations = {
   setLoginUser (state, userInfos) { // 自定义改变state初始值的方法，这里面的参数除了state之外还可以再传额外的参数(变量或对象);
     state.isLogin = true
     if (userInfos.uid !== undefined) {
-      state.userInfo.uid = userInfos.uid
+      state.user_id = state.userInfo.uid = userInfos.uid
     }
     if (userInfos.username !== undefined) {
       state.userInfo.username = userInfos.username

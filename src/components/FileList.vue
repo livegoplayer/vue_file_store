@@ -213,7 +213,7 @@ export default {
         children: 'Children'
       }, // 树形下拉框配置项
       uploadOptions: {
-        uid: this.$store.getters.getUserInfo.uid
+        uid: this.$store.getters.getUid
       } // 上传文件附加参数
     }
   },
@@ -331,7 +331,7 @@ export default {
     // 获取文件列表
     getFileList () {
       this.$get(fileApi.getFileListApi, {
-        uid: this.$store.getters.getUserInfo.uid,
+        uid: this.$store.getters.getUid,
         path_id: this.path.id,
         search_key: this.path.key
       })
@@ -340,7 +340,7 @@ export default {
           this.file_table_data = res.data.file_list
 
           this.$get(fileApi.getChildPathList, {
-            uid: this.$store.getters.getUserInfo.uid,
+            uid: this.$store.getters.getUid,
             parent_id: this.path.id,
             search_key: this.path.key
           }).then(
@@ -394,7 +394,7 @@ export default {
             this.load.folder = false
             // let res_data = data.Data;
             this.$post(fileApi.saveUserPathApi, {
-              uid: this.$store.getters.getUserInfo.uid,
+              uid: this.$store.getters.getUid,
               path_name: this.folder_form.path_name,
               parent_id: this.folder_form.parent_id ? this.folder_form.parent_id : 0,
               path_id: this.folder_form.path_id
@@ -456,7 +456,7 @@ export default {
       if (_data.FolderIds.length > 0) {
         this.$post(fileApi.delUserPathApi, {
           id_map: _data.FolderIds,
-          uid: this.$store.getters.getUserInfo.uid
+          uid: this.$store.getters.getUid
         }).then(res => {
           this.$message.success(res.msg)
         })
@@ -466,7 +466,7 @@ export default {
       if (_data.FolderFileIds.length > 0) {
         this.$post(fileApi.delUserFileApi, {
           id_map: _data.FolderFileIds,
-          uid: this.$store.getters.getUserInfo.uid
+          uid: this.$store.getters.getUid
         }).then(res => {
           this.$message.success(res.msg)
         })
@@ -479,7 +479,9 @@ export default {
     },
     // 获取所有文件夹
     getAllFolders () {
-      this.$get(fileApi.getPathListApi, { uid: this.$store.getters.getUserInfo.uid }).then(res => {
+      console.log(this.$store.getters.getUserInfo)
+      console.log(this.$store.getters.getUid)
+      this.$get(fileApi.getPathListApi, { uid: this.$store.getters.getUid }).then(res => {
         this.all_folder_list = res.data.path_list || []
         const _list = [...this.all_folder_list]
         const options = {
@@ -517,7 +519,7 @@ export default {
       if (moveFolderList.length !== 0) {
         this.$post(fileApi.batchMoveUserPathApi, {
           id_map: moveFolderList,
-          uid: this.$store.getters.getUserInfo.uid,
+          uid: this.$store.getters.getUid,
           parent_id: parentId
         }).then(
           res => {
@@ -535,7 +537,7 @@ export default {
       if (moveFileList.length !== 0) {
         this.$post(fileApi.batchMoveUserFileApi, {
           id_map: moveFileList,
-          uid: this.$store.getters.getUserInfo.uid,
+          uid: this.$store.getters.getUid,
           parent_id: parentId
         }).then(
           res => {
