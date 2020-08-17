@@ -244,20 +244,24 @@ export default {
       fileList
         .filter(file => file.status === 'ready')
         .forEach(file => {
-          this.uploadSingleFile(file)
+          var lastFile = fadeIn
+          if (fileList[fileList.length - 1] == file) {
+            lastFile = true
+          }
+          this.uploadSingleFile(file, lastFile)
         })
     },
-    uploadSingleFile (file) {
+    uploadSingleFile (file, lastFile) {
       var _this = this
       var reader = new FileReader()
       reader.onload = function (event) {
         var fileSha1 = sha1(event.target.result)
 
-        _this.doUpload(_this, file, fileSha1)
+        _this.doUpload(_this, file, fileSha1, lastFile)
       }
       reader.readAsArrayBuffer(file.raw)
     },
-    doUpload (_this, file, fileSha1) {
+    doUpload (_this, file, fileSha1, lastFile) {
       var formData = new FormData()
 
       // formData.append(...this.uploadOptions)
@@ -271,7 +275,9 @@ export default {
         formData.append('file', file.raw)
         _this.$up_load(fileApi.uploadFileApi, formData).then(
           res => {
-            this.$message.success(res.msg)
+            if (lastFile) {
+              this.$message.success(res.msg)
+            }
           }
         )
       } else {
@@ -298,8 +304,10 @@ export default {
               formData.append('file', file.raw)
 
               _this.$up_load_to_oss(res.data.token.host, formParam, formData).then(res => {
-                console.log('$up_load_to_oss')
-                console.log(res)
+                if (res.data.new_id > 0) {
+                  this.onFileUploadSuccess(file)
+                  this.$message.success(file.name + ' upload success !')
+                }
               })
             }
           }
@@ -400,8 +408,6 @@ export default {
               parent_id: this.folder_form.parent_id ? this.folder_form.parent_id : 0,
               path_id: this.folder_form.path_id
             }
-            console.log('saveUserPathApi:')
-            console.log(data)
             this.$post(fileApi.saveUserPathApi, data).then(res => {
               var newFolderData = res.data
               if (newFolderData.id) {
@@ -562,7 +568,6 @@ export default {
     },
     // 上传成功调用的方法
     onFileUploadSuccess (file) {
-      console.log(file)
       var index
       for (var i = 0; i < this.$refs['wl-explorer-cpt'].fileList.length; i++) {
         if (this.$refs['wl-explorer-cpt'].fileList[i] == file) {
