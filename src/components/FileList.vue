@@ -221,7 +221,7 @@ export default {
     handleFileView (row, showFuc) {
       // 判断类型
       if (![2, 3, 5].includes(row.type)) {
-        this.$message.err('该文件不支持打开')
+        this.$message.error('该文件不支持打开')
       }
 
       if (row.type === 2) {
