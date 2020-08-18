@@ -307,6 +307,10 @@ export default {
                 if (res.data.new_id > 0) {
                   this.onFileUploadSuccess(file)
                   this.$message.success(file.name + ' upload success !')
+                  if (lastFile) {
+                    // 刷新页面
+                    this.getFileList()
+                  }
                 }
               })
             }
