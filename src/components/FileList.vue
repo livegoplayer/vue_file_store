@@ -289,6 +289,9 @@ export default {
             if (res.data.is_upload === true) {
               this.$message.success('上传成功')
               this.onFileUploadSuccess(file)
+              if (lastFile) {
+                this.getFileList()
+              }
             } else {
               // 这里是sso直传逻
               var formParam = formData = new FormData()
