@@ -300,7 +300,6 @@ export default {
               formParam.append('callback', res.data.token.callback)
               formParam.append('Signature', res.data.token.signature)
               formParam.append('dir', res.data.token.dir)
-
               formData.append('file', file.raw)
 
               _this.$up_load_to_oss(res.data.token.host, formParam, formData).then(res => {
