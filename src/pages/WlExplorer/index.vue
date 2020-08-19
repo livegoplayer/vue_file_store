@@ -827,6 +827,7 @@ export default {
     },
     // 预览文件
     previewFile (row) {
+      console.log(row)
       this.$emit('preview', row, this.showPreview)
     },
     // 打开预览组件

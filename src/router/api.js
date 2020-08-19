@@ -34,7 +34,8 @@ const fileApi = {
   saveUserPathApi: fileApiLink + 'saveUserPath',
   getChildPathList: fileApiLink + 'getChildPathList',
   getUploadToken: fileApiLink + 'getUploadToken',
-  ssoUploadSuccessCallback: fileApiLink + 'ssoUploadSuccessCallback'
+  ssoUploadSuccessCallback: fileApiLink + 'ssoUploadSuccessCallback',
+  getDownLoadUrlApi: fileApiLink + 'getDownLoadUrl'
 }
 
 export { userApi, commonApi, fileApi }

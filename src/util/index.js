@@ -128,20 +128,6 @@ function splicParentsUntil (data, coordinate, options = {
  * @param {*} res http请求返回数据
  */
 function download (res) {
-  // 错误处理
-  if (res.data.type == 'application/json') {
-    const reader = new FileReader()
-    reader.readAsText(res.data, 'utf-8')
-    reader.onload = function () {
-      const json_data = JSON.parse(reader.result)
-      Message({
-        showClose: true,
-        message: json_data.Message,
-        type: 'error'
-      })
-    }
-    return
-  }
   // 下载处理
   const filename = 'content-disposition' in res.headers
     ? decodeURIComponent(

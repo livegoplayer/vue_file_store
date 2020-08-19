@@ -68,6 +68,7 @@ import wlTreeSelect from '@/components/wl-tree/' // 树形下拉
 // import wlVueSelect from '@/components/wl-vue-select' // 下拉
 import { closeOtherLayout, arrayToTree } from '@/util' // 导入关闭其他弹出类视图函数
 import sha1 from 'js-sha1'
+import { apiConfig } from '../router/config'
 
 export default {
   name: 'app',
@@ -222,10 +223,13 @@ export default {
       // 判断类型
       if (![2, 3, 5].includes(row.type)) {
         this.$message.error('该文件不支持打开')
+        return
       }
 
       if (row.type === 2) {
         this.$refs['wl-explorer-cpt'].previewType = 'img'
+        // todo
+        // this.$refs['wl-explorer-cpt'].previewOptions = 'img'
       } else if (row.type === 3) {
         this.$refs['wl-explorer-cpt'].previewType = 'video'
       } else if (row.type === 5) {
@@ -322,6 +326,16 @@ export default {
       }
     },
     download (data, func) {
+      data.forEach(file => {
+        var data = {
+          id: file.id
+        }
+        this.$get(fileApi.getDownLoadUrlApi, data).then(res => {
+          var downloadUrl = res.data.download_url
+          window.open(downloadUrl, 'target')
+        }
+        )
+      })
       console.log(data, func)
     },
     onChange (val) {
