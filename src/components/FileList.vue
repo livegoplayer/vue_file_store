@@ -499,6 +499,7 @@ export default {
           uid: this.$store.getters.getUid
         }).then(res => {
           this.$message.success(res.msg)
+          this.getFileList()
         })
       }
 
