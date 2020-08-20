@@ -299,8 +299,7 @@ export default {
             } else {
               // 这里是sso直传逻
               var formParam = formData = new FormData()
-              var fileExtension = file.name.split('.').pop().toLowerCase()
-              formParam.append('key', res.data.token.dir + '/' + fileSha1 + '.' + fileExtension)
+              formParam.append('key', res.data.token.key)
               formParam.append('policy', res.data.token.policy)
               formParam.append('OSSAccessKeyId', res.data.token.access_id)
               formParam.append('success_action_status', 201)
