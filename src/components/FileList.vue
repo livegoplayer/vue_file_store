@@ -244,8 +244,14 @@ export default {
           showFuc()
         })
       } else if (row.type === 3) {
-        this.$refs['wl-explorer-cpt'].previewType = 'video'
-        showFuc()
+        var data = {
+          id: row.id,
+          preview: 1
+        }
+        this.$get(fileApi.getDownLoadUrlApi, data).then(res => {
+          var downloadUrl = res.data.download_url
+          window.open(downloadUrl, 'target')
+        })
       } else if (row.type === 5) {
         var data = {
           id: row.id,
