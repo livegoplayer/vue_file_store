@@ -304,7 +304,11 @@ export default {
       reader.onload = function (event) {
         var fileSha1 = sha1(event.target.result)
 
-        _this.doUpload(_this, file, fileSha1, lastFile)
+        if (file.size < 1024 * 1024) {
+          _this.doUpload(_this, file, fileSha1, lastFile)
+        } else {
+          _this.$message.error('为了节约经费,文件大小不得超过1M!')
+        }
       }
       reader.readAsArrayBuffer(file.raw)
     },
