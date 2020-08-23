@@ -127,6 +127,12 @@ export default {
                 return '视频'
               case 4:
                 return '其他'
+              case 5:
+                return 'PDF文件'
+              case 6:
+                return 'office文件'
+              case 7:
+                return '文本'
             }
           }
         },
@@ -221,7 +227,7 @@ export default {
   methods: {
     handleFileView (row, showFuc) {
       // 判断类型
-      if (![2, 3, 5, 6].includes(row.type)) {
+      if (![2, 3, 5, 6, 7].includes(row.type)) {
         this.$message.error('该文件不支持打开')
         return
       }
@@ -256,7 +262,7 @@ export default {
         }
         this.$get(fileApi.getDownLoadUrlApi, data).then(res => {
           var downloadUrl = res.data.download_url
-          window.open('https://view.officeapps.live.com/op/view.aspx?src=' + downloadUrl, 'target')
+          window.open('https://view.officeapps.live.com/op/view.aspx?src=' + encodeURIComponent(downloadUrl), 'target')
         })
       } else if (row.type === 7) {
         var data = {
