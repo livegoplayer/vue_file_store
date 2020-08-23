@@ -49,19 +49,17 @@ export default {
   width: 80%;
   height: 90%;
   z-index: 99;
-  background-color: #fff;
   text-align: center;
-  display:-webkit-box;
-  display:-ms-flexbox;
-  display:flex-box;
-  display:flex;
-  -webkit-box-align:center;
-  -ms-flex-align:center;
-  align-items:center;
-  -webkit-box-pack:center;
-  -ms-flex-pack:center;
-  justify-content:center;
-  text-align:center;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  background: #fff;
+  border: 20px solid rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
 
   > .u-img-pre {
     max-width: 100%;
