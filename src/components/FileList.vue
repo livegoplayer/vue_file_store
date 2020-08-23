@@ -221,22 +221,44 @@ export default {
   methods: {
     handleFileView (row, showFuc) {
       // 判断类型
-      if (![2, 3, 5].includes(row.type)) {
+      if (![2, 3, 5, 6].includes(row.type)) {
         this.$message.error('该文件不支持打开')
         return
       }
 
       if (row.type === 2) {
         this.$refs['wl-explorer-cpt'].previewType = 'img'
-        // todo
-        // this.$refs['wl-explorer-cpt'].previewOptions = 'img'
+        var data = {
+          id: row.id,
+          preview: 1
+        }
+        this.$get(fileApi.getDownLoadUrlApi, data).then(res => {
+          var downloadUrl = res.data.download_url
+          this.$refs['wl-explorer-cpt'].previewOptions = downloadUrl
+          showFuc()
+        })
       } else if (row.type === 3) {
         this.$refs['wl-explorer-cpt'].previewType = 'video'
+        showFuc()
       } else if (row.type === 5) {
-        this.$refs['wl-explorer-cpt'].previewType = 'iframe'
+        var data = {
+          id: row.id,
+          preview: 1
+        }
+        this.$get(fileApi.getDownLoadUrlApi, data).then(res => {
+          var downloadUrl = res.data.download_url
+          window.open(downloadUrl, 'target')
+        })
+      } else if (row.type === 6) {
+        var data = {
+          id: row.id,
+          preview: 1
+        }
+        this.$get(fileApi.getDownLoadUrlApi, data).then(res => {
+          var downloadUrl = res.data.download_url
+          window.open('https://view.officeapps.live.com/op/view.aspx?src=' + downloadUrl, 'target')
+        })
       }
-
-      showFuc()
     },
     /**
        * @name 上传文件提交操作
