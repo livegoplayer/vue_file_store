@@ -258,6 +258,15 @@ export default {
           var downloadUrl = res.data.download_url
           window.open('https://view.officeapps.live.com/op/view.aspx?src=' + downloadUrl, 'target')
         })
+      } else if (row.type === 7) {
+        var data = {
+          id: row.id,
+          preview: 1
+        }
+        this.$get(fileApi.getDownLoadUrlApi, data).then(res => {
+          var downloadUrl = res.data.download_url
+          window.open(downloadUrl, 'target')
+        })
       }
     },
     /**
