@@ -13,32 +13,32 @@ export default {
       type: String
     }
   },
-  mounted() {
+  mounted () {
     // 绑定键盘事件
-    window.addEventListener("keyup", this.imgClose, false);
+    window.addEventListener('keyup', this.imgClose, false)
   },
   methods: {
-    imgClose(e) {
-      if (e == "close") {
-        this.$emit("closeImg");
-        return;
+    imgClose (e) {
+      if (e == 'close') {
+        this.$emit('closeImg')
+        return
       }
 
       if (e.keyCode === 27) {
-        this.$emit("closeImg");
+        this.$emit('closeImg')
       }
     }
   },
   computed: {
-    imgUrl() {
-      return this.url;
+    imgUrl () {
+      return this.url
     }
   },
-  beforeDestroy() {
+  beforeDestroy () {
     // 卸载键盘事件
-    window.removeEventListener("keyup", this.imgClose, false);
+    window.removeEventListener('keyup', this.imgClose, false)
   }
-};
+}
 </script>
 
 <style lang="scss">
@@ -51,6 +51,17 @@ export default {
   z-index: 99;
   background-color: #fff;
   text-align: center;
+  display:-webkit-box;
+  display:-ms-flexbox;
+  display:flex-box;
+  display:flex;
+  -webkit-box-align:center;
+  -ms-flex-align:center;
+  align-items:center;
+  -webkit-box-pack:center;
+  -ms-flex-pack:center;
+  justify-content:center;
+  text-align:center;
 
   > .u-img-pre {
     max-width: 100%;
@@ -58,5 +69,3 @@ export default {
   }
 }
 </style>
-
-
