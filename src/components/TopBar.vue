@@ -50,14 +50,17 @@ export default {
       window.location.href = userSSOHost + '?goto=2'
     },
     logout () {
-      this.$post(userApi.userLogout)
-      // 否则就跳到默认的首页
-      if (this.$route.path !== '/main') {
-        this.$router.push('/main')
-        location.reload()
-      } else {
-        location.reload()
+      this.$post(userApi.userLogout, { uid: this.$store.getters.getUid }).then(res => {
+        if (res.data.success) {
+          if (this.$route.path !== '/') {
+            this.$router.push('/')
+            location.reload()
+          } else {
+            location.reload()
+          }
+        }
       }
+      )
     }
   },
 
