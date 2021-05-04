@@ -104,10 +104,10 @@ export default {
         {
           label: '修改日期',
           align: 'center',
-          prop: 'update_datetime',
+          prop: 'upt_datetime',
           width: 120,
           formatter (row) {
-            return row.update_datetime.split('T')[0] || '-'
+            return row.upt_datetime.split('T')[0] || '-'
           }
         },
         {
@@ -231,50 +231,33 @@ export default {
         this.$message.error('该文件不支持打开')
         return
       }
-
+      var data = {
+        id: row.id,
+        preview: 1
+      }
       if (row.type === 2) {
         this.$refs['wl-explorer-cpt'].previewType = 'img'
-        var data = {
-          id: row.id,
-          preview: 1
-        }
         this.$get(fileApi.getDownLoadUrlApi, data).then(res => {
           var downloadUrl = res.data.download_url
           this.$refs['wl-explorer-cpt'].previewOptions = downloadUrl
           showFuc()
         })
       } else if (row.type === 3) {
-        var data = {
-          id: row.id,
-          preview: 1
-        }
         this.$get(fileApi.getDownLoadUrlApi, data).then(res => {
           var downloadUrl = res.data.download_url
           window.open(downloadUrl, 'target')
         })
       } else if (row.type === 5) {
-        var data = {
-          id: row.id,
-          preview: 1
-        }
         this.$get(fileApi.getDownLoadUrlApi, data).then(res => {
           var downloadUrl = res.data.download_url
           window.open(downloadUrl, 'target')
         })
       } else if (row.type === 6) {
-        var data = {
-          id: row.id,
-          preview: 1
-        }
         this.$get(fileApi.getDownLoadUrlApi, data).then(res => {
           var downloadUrl = res.data.download_url
           window.open('https://view.officeapps.live.com/op/view.aspx?src=' + encodeURIComponent(downloadUrl), 'target')
         })
       } else if (row.type === 7) {
-        var data = {
-          id: row.id,
-          preview: 1
-        }
         this.$get(fileApi.getDownLoadUrlApi, data).then(res => {
           var downloadUrl = res.data.download_url
           window.open(downloadUrl, 'target')
@@ -292,7 +275,7 @@ export default {
         .filter(file => file.status === 'ready')
         .forEach(file => {
           var lastFile = fadeIn
-          if (fileList[fileList.length - 1] == file) {
+          if (fileList[fileList.length - 1] === file) {
             lastFile = true
           }
           this.uploadSingleFile(file, lastFile)
@@ -469,10 +452,10 @@ export default {
             this.load.folder = false
             // let res_data = data.Data;
             var data = {
-              uid: this.$store.getters.getUid,
+              user_id: this.$store.getters.getUid,
               path_name: this.folder_form.path_name,
               parent_id: this.folder_form.parent_id ? this.folder_form.parent_id : 0,
-              path_id: this.folder_form.path_id
+              id: this.folder_form.path_id
             }
             this.$post(fileApi.saveUserPathApi, data).then(res => {
               var newFolderData = res.data
@@ -556,8 +539,6 @@ export default {
     },
     // 获取所有文件夹
     getAllFolders () {
-      console.log(this.$store.getters.getUserInfo)
-      console.log(this.$store.getters.getUid)
       this.$get(fileApi.getPathListApi, { uid: this.$store.getters.getUid }).then(res => {
         this.all_folder_list = res.data.path_list || []
         const _list = [...this.all_folder_list]

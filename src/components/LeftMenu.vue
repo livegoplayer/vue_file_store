@@ -33,7 +33,7 @@
 
     </div>
 
-    <div class="content">
+    <div class="content" v-if="this.$store.getters.getUid > 0 ">
       <router-view></router-view>
     </div>
   </div>

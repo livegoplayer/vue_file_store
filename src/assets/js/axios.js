@@ -4,7 +4,7 @@ import Qs from 'qs'
 import Message from 'element-ui/packages/message/src/main'
 
 axios.defaults.withCredentials = true // 若跨域请求需要带 cookie 身份识别
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded'
+axios.defaults.headers.post['Content-Type'] = 'application/json;charset=utf-8'
 
 // http request 拦截器
 axios.interceptors.request.use(
@@ -90,27 +90,26 @@ export function get (url, params) {
  */
 export function post (url, data = {}) {
   return new Promise((resolve, reject) => {
+    // const json = JSON.stringify({ answer: 42 });
     axios({
       url: url,
       method: 'POST',
       data: data,
       transformRequest: [
         function (data) {
-          let ret = ''
-          for (const it in data) {
-            if (data[it] instanceof Array) {
-              // 处理数组参数
-              ret += Qs.stringify({ [it]: data[it] }, { arrayFormat: 'repeat' }) + '&'
-            } else {
-              ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
-            }
-          }
-          return ret
+          // let ret = ''
+          return JSON.stringify(data)
+          // for (const it in data) {
+          //   if (data[it] instanceof Array) {
+          //     // 处理数组参数
+          //     ret += Qs.stringify({ [it]: data[it] }, { arrayFormat: 'repeat' }) + '&'
+          //   } else {
+          //     ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+          //   }
+          // }
+          // return ret
         }
-      ],
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
+      ]
     })
       .then(res => {
         resolve(res.data)

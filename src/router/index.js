@@ -47,7 +47,7 @@ function checkUserStatus (next) {
     data.token = token
     // 删除url中的token参数
     var url = funcUrlDel('token').substr(1)
-    window.history.pushState({}, 'www.52db.xyz', url)
+    window.history.pushState({}, document.title, url)
   }
 
   post(userApi.userCheckUserStatusApi, data).then(res => {
@@ -67,7 +67,7 @@ function getQueryVariable (variable) {
   var vars = query.split('&')
   for (var i = 0; i < vars.length; i++) {
     var pair = vars[i].split('=')
-    if (pair[0] == variable) {
+    if (pair[0] === variable) {
       return pair[1]
     }
   }
@@ -85,13 +85,13 @@ function funcUrlDel (name) {
     for (var i = 0; i < arr.length; i++) {
       arr[i] = arr[i].split('=')
       obj[arr[i][0]] = arr[i][1]
-    };
+    }
     delete obj[name]
-    var params = JSON.stringify(obj).replace(/[\"\{\}]/g, '').replace(/\:/g, '=').replace(/\,/g, '&')
+    var params = JSON.stringify(obj).replace(/["{}]/g, '').replace(/:/g, '=').replace(/,/g, '&')
     var url = baseUrl
     if (params) {
-      url = baseUrl + '?' + JSON.stringify(obj).replace(/[\"\{\}]/g, '').replace(/\:/g, '=').replace(/\,/g, '&')
+      url = baseUrl + '?' + JSON.stringify(obj).replace(/["{}]/g, '').replace(/:/g, '=').replace(/,/g, '&')
     }
     return url
-  };
+  }
 }

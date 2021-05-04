@@ -8,8 +8,8 @@ const userInfo = {
   username: '请先登录',
   userRoleList: '',
   userAuthorityList: '',
-  addDatetime: '',
-  updateDatetime: '',
+  add_datetime: '',
+  upt_datatime: '',
   avatar: require('../assets/avatar.png')
 }
 
@@ -52,9 +52,7 @@ const getters = { // 实时监听state值的变化(最新状态)
     return state.delUserRoleAuthority
   },
   getUid () { // 方法名随意,主要是来承载变化的showFooter的值
-    console.log(state)
-    console.log(state.user_id)
-    return state.user_id.toString()
+    return state.user_id
   },
   getToken () {
     return state.token
@@ -74,27 +72,27 @@ const mutations = {
       state.userInfo.userAuthorityList = userInfos.userAuthorityList
       for (const id in state.userInfo.userAuthorityList) {
         // 添加用户
-        if (id == 1) {
+        if (id === 1) {
           state.addUserAuthority = true
         }
 
         // 获取用户列表
-        if (id == 2) {
+        if (id === 2) {
           state.getUserListAuthority = true
         }
 
         // 删除用户
-        if (id == 3) {
+        if (id === 3) {
           state.delUserAuthority = true
         }
 
         // 为用户添加角色
-        if (id == 4) {
+        if (id === 4) {
           state.addUserRoleAuthority = true
         }
 
         // 为用户删除角色
-        if (id == 5) {
+        if (id === 5) {
           state.delUserRoleAuthority = true
         }
       }
@@ -102,11 +100,11 @@ const mutations = {
     if (userInfos.userRoleList !== undefined) {
       state.userInfo.userRoleList = userInfos.userRoleList
     }
-    if (userInfos.addDatetime !== undefined) {
-      state.userInfo.addDatetime = userInfos.addDatetime
+    if (userInfos.add_datetime !== undefined) {
+      state.userInfo.add_datetime = userInfos.add_datetime
     }
-    if (userInfos.updateDatetime !== undefined) {
-      state.userInfo.updateDatetime = userInfos.updateDatetime
+    if (userInfos.upt_datatime !== undefined) {
+      state.userInfo.upt_datatime = userInfos.upt_datatime
     }
   },
   setRoleListUid (state, uid) {
