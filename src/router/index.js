@@ -44,13 +44,12 @@ function checkUserStatus (next) {
   var token = getQueryVariable('token')
   var data = {}
   if (token !== '') {
-    data.token = token
     // 删除url中的token参数
     var url = funcUrlDel('token').substr(1)
     window.history.pushState({}, document.title, url)
   }
 
-  post(userApi.userCheckUserStatusApi, data).then(res => {
+  post(userApi.userCheckUserStatusApi + '?token=' + token, data).then(res => {
     // 如果已经登录了
     if (res.data.isLogin) {
       // 设置全局的userInfo

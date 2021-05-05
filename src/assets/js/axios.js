@@ -49,7 +49,7 @@ axios.interceptors.response.use(
         }
       }
       if (process.env.NODE_ENV === 'development') {
-        console.log(response)
+        console.log(response.data)
       }
       return response
     }
