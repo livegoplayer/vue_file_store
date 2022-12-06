@@ -14,7 +14,7 @@
     "element-ui": "^2.13.2",
     "fs": "0.0.1-security",
     "js-cookie": "^2.2.1",
-    "qs": "^6.9.4",
+    "qs": "^6.9.7",
     "require": "^2.4.20",
     "sass": "^1.26.10",
     "sass-loader": "^9.0.2",
